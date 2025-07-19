@@ -13,14 +13,14 @@ app.get('/invite/:code', (req, res) => {
   res.redirect(deepLink);
 });
 
-// 🧾 Universal Links - apple-app-site-association
+// 🧾 קובץ apple-app-site-association
 app.get('/apple-app-site-association', (req, res) => {
-  res.setHeader('Content-Type', 'application/json');
-  res.sendFile('apple-app-site-association', {
-    root: __dirname,
+  res.setHeader('Content-Type', 'application/json'); // חשוב מאוד!
+  res.sendFile(path.join(__dirname, 'apple-app-site-association'), {
     dotfiles: 'allow'
   });
 });
+
 
 // 🌐 קבצים סטטיים (למשל index.html וכו')
 app.use(express.static(path.join(__dirname, 'public')));
