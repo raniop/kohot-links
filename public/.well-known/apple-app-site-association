@@ -1,0 +1,11 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "TFGZ9HC76N.com.rani.MyTeamOrder",
+        "paths": [ "/invite/*" ]
+      }
+    ]
+  }
+}
