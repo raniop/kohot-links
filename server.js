@@ -1,32 +1,28 @@
+// server.js
 const express = require('express');
 const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// 🔗 תמיכה בקישור עם פרמטר groupId
-app.get('/invite', (req, res) => {
-  const groupId = req.query.groupId;
-  if (groupId) {
-    res.redirect(`quickteams://invite/${groupId}`);
-  } else {
-    res.status(400).send('Missing groupId');
-  }
-});
-
-// 🔗 תמיכה בקישור עם path דינמי /invite/:code
+// 🔗 דיפ לינק מהצורה: https://links.kohot.co/invite/ABC123
 app.get('/invite/:code', (req, res) => {
   const inviteCode = req.params.code;
-  res.redirect(`quickteams://invite/${inviteCode}`);
+  const deepLink = `quickteams://invite/${inviteCode}`;
+  console.log(`📲 Redirecting to deep link: ${deepLink}`);
+  res.redirect(deepLink);
 });
 
-// 🧾 קובץ apple-app-site-association
+// 🧾 Universal Links - apple-app-site-association
 app.get('/apple-app-site-association', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
-  res.sendFile(path.join(__dirname, 'apple-app-site-association'));
+  res.sendFile('apple-app-site-association', {
+    root: __dirname,
+    dotfiles: 'allow'
+  });
 });
 
-// 🌐 קבצים סטטיים
+// 🌐 קבצים סטטיים (למשל index.html וכו')
 app.use(express.static(path.join(__dirname, 'public')));
 
 // 🚀 הפעלת השרת
